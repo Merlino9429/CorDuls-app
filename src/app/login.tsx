@@ -7,6 +7,7 @@ import { Colors, Spacing } from '@/constants/theme';
 import { isGoogleSignInEnabled, signInWithGoogle } from '@/lib/googleAuth';
 import { supabase } from '@/lib/supabase';
 import { showAlert } from '@/lib/alert';
+import { Logo } from '@/components/Logo';
 
 export default function LoginScreen() {
   const [mode, setMode] = useState<'login' | 'register'>('login');
@@ -67,7 +68,9 @@ export default function LoginScreen() {
 
   return (
     <Screen>
-      <Text style={{ fontSize: 30, fontWeight: '900', color: Colors.primary, textAlign: 'center', marginVertical: Spacing.xl }}>Cor Duls 💛</Text>
+      <View style={{ alignItems: 'center', marginVertical: Spacing.lg }}>
+        <Logo size={170} />
+      </View>
       {googleEnabled ? (
         <>
       <Pressable

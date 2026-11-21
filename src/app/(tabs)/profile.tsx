@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Linking, Text } from 'react-native';
+import { Linking, Text, View } from 'react-native';
 import { Button, Card, Empty, Field, Muted, Screen, Subtitle } from '@/components/ui';
 import { Colors, Spacing } from '@/constants/theme';
 import { useAuth } from '@/lib/auth';
@@ -8,6 +8,7 @@ import { unregisterPush } from '@/lib/push';
 import { callFunction } from '@/lib/api';
 import { disableWebPush } from '@/lib/webPush';
 import { NotificationsCard } from '@/components/NotificationsCard';
+import { Logo } from '@/components/Logo';
 import { supabase } from '@/lib/supabase';
 import type { Profile, StoreSettings } from '@/lib/types';
 import { showAlert } from '@/lib/alert';
@@ -22,7 +23,10 @@ export default function ProfileScreen() {
 
   const storeCard = store ? (
     <Card>
-      <Text style={{ fontWeight: '800', fontSize: 16, color: Colors.text }}>{store.store_name}</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.md, marginBottom: Spacing.sm }}>
+        <Logo size={56} />
+        <Text style={{ fontWeight: '800', fontSize: 16, color: Colors.text }}>{store.store_name}</Text>
+      </View>
       {store.address ? <Muted>📍 {store.address}</Muted> : null}
       {store.opening_hours ? <Muted>🕒 {store.opening_hours}</Muted> : null}
       {store.phone ? (

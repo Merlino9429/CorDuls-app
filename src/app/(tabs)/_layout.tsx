@@ -5,6 +5,7 @@ import { Colors } from '@/constants/theme';
 import { useAuth } from '@/lib/auth';
 import { useCart } from '@/lib/cart';
 import { useHostBadgeInset } from '@/lib/webOverlay';
+import { Logo } from '@/components/Logo';
 
 type IconName = keyof typeof Ionicons.glyphMap;
 function icon(name: IconName) {
@@ -29,7 +30,7 @@ export default function TabsLayout() {
         headerShadowVisible: false,
         sceneStyle: { backgroundColor: Colors.background },
       }}>
-      <Tabs.Screen name="index" options={{ title: 'Menu', headerTitle: 'Cor Duls', tabBarIcon: icon('restaurant-outline') }} />
+      <Tabs.Screen name="index" options={{ title: 'Menu', headerTitle: () => <Logo size={44} />, headerTitleAlign: 'center', tabBarIcon: icon('restaurant-outline') }} />
       <Tabs.Screen name="tessera" options={{ title: 'Tessera', headerTitle: 'Tessera punti', tabBarIcon: icon('card-outline') }} />
       <Tabs.Screen name="promo" options={{ title: 'Promozioni', href: null }} />
       <Tabs.Screen

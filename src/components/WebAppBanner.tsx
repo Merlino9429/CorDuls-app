@@ -2,6 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useEffect, useState } from 'react';
 import { Platform, Pressable, Text, View } from 'react-native';
 import { Colors, Radius, Spacing } from '@/constants/theme';
+import { Logo } from '@/components/Logo';
 import { canPromptInstall, onInstallAvailabilityChange, promptInstall } from '@/lib/installPrompt';
 import { isIos, isPreview, isStandalone } from '@/lib/webPush';
 
@@ -23,9 +24,7 @@ export function WebAppBanner() {
 
   return (
     <View style={{ backgroundColor: Colors.card, borderRadius: Radius.lg, borderWidth: 1, borderColor: Colors.border, padding: Spacing.md, marginBottom: Spacing.lg, flexDirection: 'row', gap: Spacing.md, alignItems: 'center' }}>
-      <View style={{ width: 44, height: 44, borderRadius: 10, backgroundColor: Colors.primary, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ color: '#fff', fontWeight: '900' }}>CD</Text>
-      </View>
+      <Logo size={48} />
       <View style={{ flex: 1 }}>
         <Text style={{ fontWeight: '800', color: Colors.text }}>Aggiungi Cor Duls alla Home</Text>
         {ios ? (

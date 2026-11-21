@@ -2,6 +2,7 @@ import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { CardQr } from '@/components/CardQr';
+import { Logo } from '@/components/Logo';
 import { NotificationsCard } from '@/components/NotificationsCard';
 import { Button, Card, Empty, Loading, Muted, Row, Screen, Subtitle, Thumb } from '@/components/ui';
 import { Colors, Radius, Spacing } from '@/constants/theme';
@@ -29,8 +30,10 @@ export default function LoyaltyCardScreen() {
     return (
       <Screen>
         <View style={[s.card, { marginBottom: Spacing.lg }]}>
-          <Text style={s.cardBrand}>Cor Duls</Text>
-          <Text style={s.cardTitle}>Tessera punti</Text>
+          <Row style={{ gap: Spacing.md }}>
+            <Logo size={56} />
+            <Text style={s.cardTitle}>Tessera punti</Text>
+          </Row>
           <Text style={s.cardText}>{earnText}{settings.loyalty_welcome_points > 0 ? ` In regalo ${settings.loyalty_welcome_points} punti all'iscrizione.` : ''}</Text>
         </View>
         <Button title="Accedi per avere la tessera" onPress={() => router.push('/login')} />
@@ -43,7 +46,7 @@ export default function LoyaltyCardScreen() {
     <Screen>
       <View style={s.card}>
         <Row style={{ justifyContent: 'space-between' }}>
-          <Text style={s.cardBrand}>Cor Duls</Text>
+          <Logo size={52} />
           <Text style={s.cardBrandSmall}>TESSERA PUNTI</Text>
         </Row>
         <Text style={s.points}>{balance}</Text>
@@ -114,9 +117,8 @@ const s = StyleSheet.create({
     backgroundColor: Colors.primary, borderRadius: Radius.lg, padding: Spacing.xl,
     shadowColor: '#000', shadowOpacity: 0.18, shadowRadius: 16, shadowOffset: { width: 0, height: 8 }, elevation: 4,
   },
-  cardBrand: { color: '#fff', fontSize: 20, fontWeight: '900' },
   cardBrandSmall: { color: '#fff', opacity: 0.8, fontSize: 11, fontWeight: '800', letterSpacing: 1.5 },
-  cardTitle: { color: '#fff', fontSize: 26, fontWeight: '800', marginTop: Spacing.md },
+  cardTitle: { color: '#fff', fontSize: 26, fontWeight: '800' },
   cardText: { color: '#fff', fontSize: 15, fontWeight: '600', marginTop: 2 },
   cardSmall: { color: '#fff', opacity: 0.75, fontSize: 11, fontWeight: '700', letterSpacing: 0.5, textTransform: 'uppercase' },
   points: { color: '#fff', fontSize: 52, fontWeight: '900', marginTop: Spacing.lg, fontVariant: ['tabular-nums'] },
