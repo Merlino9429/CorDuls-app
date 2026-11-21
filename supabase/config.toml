@@ -1,0 +1,9 @@
+# Configurazione Supabase CLI (estratto). Esegui `supabase init` se ti serve il file completo.
+project_id = "cor-duls"
+
+# Queste funzioni vengono chiamate da SumUp / dal browser, senza JWT Supabase.
+[functions.sumup-webhook]
+verify_jwt = false
+
+[functions.payment-return]
+verify_jwt = false

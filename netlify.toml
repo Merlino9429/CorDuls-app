@@ -1,0 +1,8 @@
+# Pubblicazione della web app su Netlify (ordina.corduls.it).
+# Le variabili EXPO_PUBLIC_* vanno impostate in Netlify: Site configuration → Environment variables.
+[build]
+  command = "npx expo export --platform web"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
