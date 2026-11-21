@@ -1,10 +1,10 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { Button, Field, Muted, Screen, Segmented } from '@/components/ui';
 import { Colors, Spacing } from '@/constants/theme';
-import { signInWithGoogle } from '@/lib/googleAuth';
+import { isGoogleSignInEnabled, signInWithGoogle } from '@/lib/googleAuth';
 import { supabase } from '@/lib/supabase';
 import { showAlert } from '@/lib/alert';
 
@@ -46,6 +46,8 @@ export default function LoginScreen() {
   };
 
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [googleEnabled, setGoogleEnabled] = useState(false);
+  useEffect(() => { isGoogleSignInEnabled().then(setGoogleEnabled); }, []);
   const google = async () => {
     setGoogleLoading(true);
     try {
@@ -66,6 +68,8 @@ export default function LoginScreen() {
   return (
     <Screen>
       <Text style={{ fontSize: 30, fontWeight: '900', color: Colors.primary, textAlign: 'center', marginVertical: Spacing.xl }}>Cor Duls 💛</Text>
+      {googleEnabled ? (
+        <>
       <Pressable
         accessibilityRole="button"
         onPress={google}
@@ -83,6 +87,8 @@ export default function LoginScreen() {
         <Muted>oppure con email</Muted>
         <View style={{ flex: 1, height: 1, backgroundColor: Colors.border }} />
       </View>
+        </>
+      ) : null}
       <Segmented
         value={mode}
         onChange={setMode}

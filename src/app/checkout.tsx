@@ -52,6 +52,7 @@ export default function CheckoutScreen() {
       const s = data as StoreSettings;
       setSettings(s);
       if (s && !s.pickup_enabled && s.delivery_enabled) setFulfillment('delivery');
+      if (s && !s.card_payments_enabled) setPayment('cash');
     });
   }, []);
 
@@ -130,7 +131,7 @@ export default function CheckoutScreen() {
     ...(settings.delivery_enabled ? [{ value: 'delivery' as const, label: '🛵 Consegna' }] : []),
   ];
   const paymentOptions = [
-    { value: 'sumup' as const, label: '💳 Carta' },
+    ...(settings.card_payments_enabled ? [{ value: 'sumup' as const, label: '💳 Carta' }] : []),
     ...(settings.cash_enabled ? [{ value: 'cash' as const, label: fulfillment === 'delivery' ? '💶 Alla consegna' : '💶 Al ritiro' }] : []),
   ];
 
@@ -184,7 +185,9 @@ export default function CheckoutScreen() {
       ) : null}
 
       <Subtitle>Pagamento</Subtitle>
-      <Segmented options={paymentOptions} value={payment} onChange={setPayment} />
+      {paymentOptions.length > 0
+        ? <Segmented options={paymentOptions} value={payment} onChange={setPayment} />
+        : <Muted style={{ color: Colors.danger, marginBottom: Spacing.md }}>Nessun metodo di pagamento attivo: contatta il negozio.</Muted>}
 
       <Card>
         {comboSaving > 0 ? (
@@ -210,7 +213,7 @@ export default function CheckoutScreen() {
         title={payment === 'sumup' ? 'Paga con carta' : 'Conferma ordine'}
         onPress={submit}
         loading={submitting}
-        disabled={lines.length === 0 || belowMinimum || fulfillmentOptions.length === 0}
+        disabled={lines.length === 0 || belowMinimum || fulfillmentOptions.length === 0 || paymentOptions.length === 0}
       />
     </Screen>
   );

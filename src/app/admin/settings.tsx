@@ -40,6 +40,7 @@ export default function AdminSettings() {
       store_name: s.store_name, address: s.address, phone: s.phone, opening_hours: s.opening_hours,
       accepting_orders: s.accepting_orders, pickup_enabled: s.pickup_enabled, delivery_enabled: s.delivery_enabled,
       cash_enabled: s.cash_enabled,
+      card_payments_enabled: s.card_payments_enabled,
       delivery_fee_cents: parsePrice(fee) ?? 0,
       delivery_min_order_cents: parsePrice(minOrder) ?? 0,
       delivery_free_over_cents: parsePrice(freeOver),
@@ -75,7 +76,8 @@ export default function AdminSettings() {
       ) : null}
 
       <Subtitle>Pagamenti</Subtitle>
-      <ToggleRow label="Contanti al ritiro / alla consegna" hint="Il pagamento con carta (SumUp) è sempre attivo" value={s.cash_enabled} onChange={(v) => set('cash_enabled', v)} />
+      <ToggleRow label="Carta, Apple Pay, Google Pay (SumUp)" hint="Attivalo dopo aver collegato SumUp (vedi README)" value={s.card_payments_enabled} onChange={(v) => set('card_payments_enabled', v)} />
+      <ToggleRow label="Contanti al ritiro / alla consegna" value={s.cash_enabled} onChange={(v) => set('cash_enabled', v)} />
 
       <Subtitle>Tessera punti</Subtitle>
       <ToggleRow label="Tessera punti attiva" value={s.loyalty_enabled} onChange={(v) => set('loyalty_enabled', v)} />

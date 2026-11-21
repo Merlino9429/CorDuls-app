@@ -5,6 +5,21 @@ import { supabase } from './supabase';
 
 WebBrowser.maybeCompleteAuthSession();
 
+/** true se l'accesso con Google è attivo nel progetto Supabase (Authentication → Providers). */
+export async function isGoogleSignInEnabled(): Promise<boolean> {
+  if (Platform.OS === 'web' && '__cdDemoOAuth' in globalThis) return true; // anteprima
+  const url = process.env.EXPO_PUBLIC_SUPABASE_URL;
+  const key = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) return false;
+  try {
+    const res = await fetch(`${url}/auth/v1/settings`, { headers: { apikey: key } });
+    const json = await res.json();
+    return json?.external?.google === true;
+  } catch {
+    return false;
+  }
+}
+
 type OpenAuth = (url: string, redirect: string) => Promise<{ type: string; url?: string }>;
 
 /**

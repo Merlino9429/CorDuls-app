@@ -66,6 +66,7 @@ Deno.serve(handler(async (req) => {
   if (body.fulfillment === 'pickup' && !settings.pickup_enabled) throw new HttpError('Il ritiro non è disponibile');
   if (body.fulfillment === 'delivery' && !settings.delivery_enabled) throw new HttpError('La consegna non è disponibile');
   if (body.payment_method === 'cash' && !settings.cash_enabled) throw new HttpError('Il pagamento alla consegna non è disponibile');
+  if (body.payment_method === 'sumup' && !settings.card_payments_enabled) throw new HttpError('Il pagamento con carta non è ancora attivo');
 
   // ---- prezzi dal DB ----
   const productIds = body.items.filter((l) => l.type === 'product').map((l) => l.id);

@@ -78,6 +78,7 @@ export interface StoreSettings {
   delivery_min_order_cents: number;
   delivery_free_over_cents: number | null;
   cash_enabled: boolean;
+  card_payments_enabled: boolean;
   prep_time_minutes: number;
   loyalty_enabled: boolean;
   points_per_euro: number;
