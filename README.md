@@ -75,6 +75,13 @@ Ogni modifica al codice pubblicata sul branch collegato aggiorna il sito in un p
 - Sostituire le icone provvisorie in `public/icons/` con il logo Cor Duls (192×192, 512×512, maskable 512×512 con margine del 20%, apple-touch-icon 180×180).
 - Completare l'**informativa privacy** in `src/app/privacy.tsx` (dati aziendali tra parentesi quadre) e farla verificare.
 
+### Hosting senza badge: Cloudflare Pages (alternativa gratuita)
+Sul piano gratuito Netlify aggiunge in basso a destra il badge obbligatorio "Powered by Netlify". L'app gli lascia spazio in automatico (`src/lib/webOverlay.ts`), ma per toglierlo del tutto si può usare **Cloudflare Pages**, gratuito e senza badge:
+1. dash.cloudflare.com → **Workers & Pages → Create → Pages → Connect to Git** e scegli `corduls-app`;
+2. Framework preset: *None*; Build command: `npx expo export --platform web`; Build output directory: `dist`; variabile d'ambiente `NODE_VERSION` = `22`;
+3. i valori pubblici dell'app sono già in `.env.production`, e `public/_redirects` e `public/_headers` funzionano anche su Cloudflare;
+4. aggiungi l'indirizzo che ti dà Cloudflare (es. `corduls.pages.dev`) agli URL consentiti di Supabase (Authentication → URL Configuration) e imposta `APP_WEB_URL` nei segreti delle funzioni.
+
 ## 1. Requisiti e account necessari
 
 | Cosa | Costo | Note |

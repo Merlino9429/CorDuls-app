@@ -1,9 +1,10 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs } from 'expo-router/tabs';
-import type { ColorValue } from 'react-native';
+import { View, type ColorValue } from 'react-native';
 import { Colors } from '@/constants/theme';
 import { useAuth } from '@/lib/auth';
 import { useCart } from '@/lib/cart';
+import { useHostBadgeInset } from '@/lib/webOverlay';
 
 type IconName = keyof typeof Ionicons.glyphMap;
 function icon(name: IconName) {
@@ -15,7 +16,9 @@ function icon(name: IconName) {
 export default function TabsLayout() {
   const { count } = useCart();
   const { isAdmin } = useAuth();
+  const badgeInset = useHostBadgeInset();
   return (
+    <View style={{ flex: 1, paddingBottom: badgeInset, backgroundColor: Colors.card }}>
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors.primary,
@@ -37,5 +40,6 @@ export default function TabsLayout() {
       <Tabs.Screen name="profile" options={{ title: 'Profilo', tabBarIcon: icon('person-circle-outline') }} />
       <Tabs.Screen name="admin" options={{ title: 'Admin', href: isAdmin ? undefined : null, tabBarIcon: icon('settings-outline') }} />
     </Tabs>
+    </View>
   );
 }

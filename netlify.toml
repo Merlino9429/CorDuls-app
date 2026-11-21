@@ -1,12 +1,8 @@
 # Pubblicazione della web app su Netlify (ordina.corduls.it).
-# Valori PUBBLICI (finiscono comunque nel codice del sito): URL del progetto Supabase,
-# chiave anon e chiave pubblica per le notifiche. Le chiavi segrete restano solo in Supabase.
+# Le variabili pubbliche dell'app sono in .env.production.
 [build]
   command = "npx expo export --platform web"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "22"
-  EXPO_PUBLIC_SUPABASE_URL = "https://tntoxnrgdqaiwvudmtzt.supabase.co"
-  EXPO_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRudG94bnJnZHFhaXd2dWRtdHp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUyNzQzMjMsImV4cCI6MjExMDg1MDMyM30.__vI-u-tPvEa2tsuDMqUC--K_xEQ9cxRKsjNRbeUifY"
-  EXPO_PUBLIC_VAPID_PUBLIC_KEY = "BOvMPjg7zWw0NXaxWdkwxpN1Z1nMUc3xeOfBYQ182XF_70al6dAdcZY3Tv_7XnJZJsmB5sCSRUpXeF0A98I3Lu8"
