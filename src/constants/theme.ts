@@ -1,13 +1,15 @@
-// Palette e spaziature di Cor Duls. Cambia qui i colori del brand.
+// Palette e spaziature di Cor Duls, ricavate dal logo:
+// rosa orchidea (#E890D8, qui reso più intenso per la leggibilità), marrone delle linee, crema dello sfondo.
 export const Colors = {
-  primary: '#B23A5B',
-  primaryDark: '#8E2C47',
-  primarySoft: '#F8E3E9',
-  background: '#FFF8F1',
+  primary: '#A9458F',
+  primaryDark: '#8E3279',
+  primarySoft: '#F7E4F2',
+  logoPink: '#E890D8',
+  background: '#FBF8F2',
   card: '#FFFFFF',
-  text: '#3A2A23',
-  textMuted: '#8A7A72',
-  border: '#EDE2D8',
+  text: '#2B1611',
+  textMuted: '#76605A',
+  border: '#EADFD6',
   success: '#2E8B57',
   warning: '#D48A1A',
   danger: '#C0392B',

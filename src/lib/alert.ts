@@ -21,7 +21,7 @@ export function showAlert(title: string, message?: string, buttons?: AlertButton
   const box = document.createElement('div');
   Object.assign(box.style, {
     background: '#fff', borderRadius: '18px', padding: '20px', maxWidth: '320px', width: '100%',
-    boxShadow: '0 12px 40px rgba(0,0,0,.25)', color: '#3A2A23',
+    boxShadow: '0 12px 40px rgba(0,0,0,.25)', color: '#2B1611',
   });
   const h = document.createElement('div');
   h.textContent = title;
@@ -30,7 +30,7 @@ export function showAlert(title: string, message?: string, buttons?: AlertButton
   if (message) {
     const p = document.createElement('div');
     p.textContent = message;
-    Object.assign(p.style, { fontSize: '14px', color: '#8A7A72', marginBottom: '16px', lineHeight: '1.4' });
+    Object.assign(p.style, { fontSize: '14px', color: '#76605A', marginBottom: '16px', lineHeight: '1.4' });
     box.appendChild(p);
   }
   const row = document.createElement('div');
@@ -44,7 +44,7 @@ export function showAlert(title: string, message?: string, buttons?: AlertButton
     const cancel = b.style === 'cancel';
     Object.assign(btn.style, {
       border: '0', borderRadius: '999px', padding: '10px 16px', fontWeight: '700', fontSize: '14px', cursor: 'pointer',
-      background: cancel ? '#F8E3E9' : destructive ? '#C0392B' : '#B23A5B', color: cancel ? '#B23A5B' : '#fff',
+      background: cancel ? '#F7E4F2' : destructive ? '#C0392B' : '#A9458F', color: cancel ? '#A9458F' : '#fff',
     });
     btn.onclick = () => { close(); b.onPress?.(); };
     row.appendChild(btn);

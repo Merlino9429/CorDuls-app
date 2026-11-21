@@ -27,7 +27,7 @@ export async function registerForPush(userId: string): Promise<string | null> {
       // eslint-disable-next-line import/namespace -- riesportato da expo-notifications
       importance: Notifications.AndroidImportance.HIGH,
       vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#B23A5B',
+      lightColor: '#E890D8',
     });
   }
 
