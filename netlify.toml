@@ -1,4 +1,4 @@
-# Pubblicazione della web app su Netlify (ordina.corduls.it).
+# Pubblicazione della web app su Netlify (corduls.it).
 # Le variabili pubbliche dell'app sono in .env.production.
 [build]
   command = "npx expo export --platform web"

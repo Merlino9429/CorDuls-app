@@ -2,7 +2,7 @@
 import { syncPayment } from '../_shared/orders.ts';
 
 const APP_SCHEME = Deno.env.get('APP_SCHEME') ?? 'cordulsapp';
-// indirizzo della web app, es. https://ordina.corduls.it
+// indirizzo della web app, es. https://corduls.it
 const APP_WEB_URL = (Deno.env.get('APP_WEB_URL') ?? '').replace(/\/$/, '');
 const UUID = /^[0-9a-f-]{36}$/i;
 

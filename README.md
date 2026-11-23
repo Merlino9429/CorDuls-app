@@ -1,6 +1,6 @@
 # Cor Duls — App ordini
 
-**Versione principale: web app su [ordina.corduls.it](https://ordina.corduls.it)**, installabile dal browser sulla schermata Home, senza passare dagli store (vedi [Pubblicare la web app](#pubblicare-la-web-app-ordinacordulsit)). Lo stesso codice può diventare in futuro anche un'app per App Store e Google Play (sezioni 4 e 5).
+**Versione principale: web app su [corduls.it](https://corduls.it)**, installabile dal browser sulla schermata Home, senza passare dagli store (vedi [Pubblicare la web app](#pubblicare-la-web-app-ordinacordulsit)). Lo stesso codice può diventare in futuro anche un'app per App Store e Google Play (sezioni 4 e 5).
 
 App per i clienti di Cor Duls: menu, combo e promozioni; ordini da ritirare in negozio o con consegna a domicilio; pagamento con carta tramite **SumUp** oppure in contanti; notifiche push.
 La stessa app ha un'**area Admin**, visibile solo agli account amministratore, per gestire menu, foto, combo, promozioni, ordini, notifiche e impostazioni.
@@ -12,7 +12,7 @@ La stessa app ha un'**area Admin**, visibile solo agli account amministratore, p
 | Logica server | Supabase Edge Functions (Deno) |
 | Pagamenti | SumUp Online Payments, con il checkout ospitato da SumUp |
 | Notifiche push | Web Push del browser (web app) · Expo Push Service per le eventuali app degli store |
-| Hosting web app | Netlify (oppure Cloudflare Pages) su `ordina.corduls.it` |
+| Hosting web app | Netlify (oppure Cloudflare Pages) su `corduls.it` |
 
 ## Funzionalità
 
@@ -47,7 +47,7 @@ La stessa app ha un'**area Admin**, visibile solo agli account amministratore, p
 
 ---
 
-## Pubblicare la web app (ordina.corduls.it)
+## Pubblicare la web app (corduls.it)
 
 Servono: **Supabase** configurato (sezioni 2 e 3), un account gratuito **Netlify** e l'accesso al pannello DNS del dominio `corduls.it` (se il dominio è gestito da Wix: Wix → Domini → Gestisci record DNS).
 
@@ -55,15 +55,15 @@ Servono: **Supabase** configurato (sezioni 2 e 3), un account gratuito **Netlify
    ```bash
    npx web-push generate-vapid-keys
    ```
-   Metti la chiave pubblica e quella privata in `supabase/functions/.env` (`VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`), insieme a `APP_WEB_URL=https://ordina.corduls.it`, poi esegui di nuovo `supabase secrets set --env-file supabase/functions/.env` e pubblica le funzioni (anche `delete-account`).
+   Metti la chiave pubblica e quella privata in `supabase/functions/.env` (`VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`), insieme a `APP_WEB_URL=https://corduls.it`, poi esegui di nuovo `supabase secrets set --env-file supabase/functions/.env` e pubblica le funzioni (anche `delete-account`).
 2. **Supabase → Authentication → URL Configuration**:
-   - Site URL: `https://ordina.corduls.it`
-   - Redirect URLs: aggiungi `https://ordina.corduls.it/auth/callback`
+   - Site URL: `https://corduls.it`
+   - Redirect URLs: aggiungi `https://corduls.it/auth/callback`
 3. **Netlify**: *Add new site → Import from Git*, scegli il repository `corduls-app`, branch `main` (il file `netlify.toml` imposta già build e cartella). In *Site configuration → Environment variables* aggiungi:
    - `EXPO_PUBLIC_SUPABASE_URL`, `EXPO_PUBLIC_SUPABASE_ANON_KEY`
    - `EXPO_PUBLIC_VAPID_PUBLIC_KEY` (la chiave pubblica del punto 1)
-4. **Dominio**: in Netlify *Domain management → Add domain* inserisci `ordina.corduls.it`. Nel DNS del dominio crea un record **CNAME** `ordina` → `<nome-del-sito>.netlify.app`. Netlify attiva da solo il certificato HTTPS, che è necessario per le notifiche e per l'installazione.
-5. **Sito Wix**: aggiungi un pulsante "Ordina online" che porta a `https://ordina.corduls.it`. Stampa anche un QR con lo stesso indirizzo da mettere sul bancone.
+4. **Dominio**: in Netlify *Manage → Name and address* il dominio principale è `corduls.it`, con `www.corduls.it` che rimanda lì. Nel DNS del dominio crea i record indicati da Netlify in **How to point it**: un record **A** per `@` verso l'IP di Netlify e un **CNAME** `www` → `corduls-app.netlify.app`. Netlify attiva da solo il certificato HTTPS, che è necessario per le notifiche e per l'installazione.
+5. **Promozione**: metti il link `https://corduls.it` sui social, sul sito Wix e sul bancone. Stampa anche un QR con lo stesso indirizzo da mettere sul bancone.
 
 Ogni modifica al codice pubblicata sul branch collegato aggiorna il sito in un paio di minuti, e i clienti la vedono alla riapertura dell'app.
 
