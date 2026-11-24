@@ -6,3 +6,10 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# Tutte le pagine dell'app (es. /tessera, /order/123) sono servite da index.html.
+# (Su Cloudflare lo fa "not_found_handling" in wrangler.jsonc.)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
