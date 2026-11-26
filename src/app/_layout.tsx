@@ -7,6 +7,7 @@ import { Platform } from 'react-native';
 import { Colors } from '@/constants/theme';
 import { AuthProvider, useAuth } from '@/lib/auth';
 import { CartProvider } from '@/lib/cart';
+import { Loading } from '@/components/ui';
 import { handleNotificationTap, registerForPush } from '@/lib/push';
 import '@/lib/installPrompt';
 import { refreshWebPush, registerServiceWorker } from '@/lib/webPush';
@@ -54,6 +55,19 @@ export default function RootLayout() {
       <CartProvider>
         <PushBridge />
         <StatusBar style="dark" />
+        <RootNavigator />
+      </CartProvider>
+    </AuthProvider>
+  );
+}
+
+// Chi non ha fatto l'accesso vede solo accesso/registrazione (e l'informativa privacy);
+// chi è già registrato entra direttamente nel menu.
+function RootNavigator() {
+  const { session, loading } = useAuth();
+  if (loading) return <Loading />;
+  const signedIn = !!session;
+  return (
         <Stack
           screenOptions={{
             headerTintColor: Colors.primary,
@@ -62,17 +76,19 @@ export default function RootLayout() {
             headerBackButtonDisplayMode: 'minimal',
             contentStyle: { backgroundColor: Colors.background },
           }}>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="product/[id]" options={{ title: '', presentation: 'modal' }} />
-          <Stack.Screen name="combo/[id]" options={{ title: '', presentation: 'modal' }} />
-          <Stack.Screen name="checkout" options={{ title: 'Checkout' }} />
-          <Stack.Screen name="order/[id]" options={{ title: 'Ordine' }} />
-          <Stack.Screen name="login" options={{ title: 'Accedi', presentation: 'modal' }} />
+          <Stack.Protected guard={signedIn}>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="product/[id]" options={{ title: '', presentation: 'modal' }} />
+            <Stack.Screen name="combo/[id]" options={{ title: '', presentation: 'modal' }} />
+            <Stack.Screen name="checkout" options={{ title: 'Checkout' }} />
+            <Stack.Screen name="order/[id]" options={{ title: 'Ordine' }} />
+            <Stack.Screen name="admin" options={{ headerShown: false }} />
+          </Stack.Protected>
+          <Stack.Protected guard={!signedIn}>
+            <Stack.Screen name="login" options={{ headerShown: false }} />
+          </Stack.Protected>
           <Stack.Screen name="privacy" options={{ title: 'Privacy' }} />
           <Stack.Screen name="auth/callback" options={{ headerShown: false }} />
-          <Stack.Screen name="admin" options={{ headerShown: false }} />
         </Stack>
-      </CartProvider>
-    </AuthProvider>
   );
 }

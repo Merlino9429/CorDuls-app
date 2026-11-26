@@ -8,8 +8,10 @@ import { isGoogleSignInEnabled, signInWithGoogle } from '@/lib/googleAuth';
 import { supabase } from '@/lib/supabase';
 import { showAlert } from '@/lib/alert';
 import { Logo } from '@/components/Logo';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function LoginScreen() {
+  const insets = useSafeAreaInsets();
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,7 +29,7 @@ export default function LoginScreen() {
       if (mode === 'login') {
         const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
         if (error) throw error;
-        router.back();
+        // entrato: il router mostra da solo il menu
       } else {
         const { data, error } = await supabase.auth.signUp({
           email: email.trim(),
@@ -35,8 +37,10 @@ export default function LoginScreen() {
           options: { data: { full_name: fullName.trim(), phone: phone.trim() } },
         });
         if (error) throw error;
-        if (data.session) router.back();
-        else showAlert('Controlla la tua email', 'Ti abbiamo inviato un link per confermare l\'account.');
+        if (!data.session) {
+          showAlert('Controlla la tua email', 'Ti abbiamo inviato un link per confermare l\'account. Poi torna qui e accedi.');
+          setMode('login');
+        }
       }
     } catch (e) {
       const msg = (e as Error).message;
@@ -52,7 +56,7 @@ export default function LoginScreen() {
   const google = async () => {
     setGoogleLoading(true);
     try {
-      if (await signInWithGoogle()) router.back();
+      await signInWithGoogle();
     } catch (e) {
       showAlert('Accesso con Google non riuscito', (e as Error).message);
     } finally {
@@ -67,9 +71,11 @@ export default function LoginScreen() {
   };
 
   return (
-    <Screen>
-      <View style={{ alignItems: 'center', marginVertical: Spacing.lg }}>
+    <Screen style={{ paddingTop: insets.top + Spacing.lg }}>
+      <View style={{ alignItems: 'center', marginTop: Spacing.xl, marginBottom: Spacing.lg }}>
         <Logo size={170} />
+        <Text style={{ fontSize: 20, fontWeight: '800', color: Colors.text, marginTop: Spacing.md }}>Benvenuto da Cor Duls</Text>
+        <Muted style={{ textAlign: 'center', marginTop: 4 }}>Accedi o registrati per ordinare, ricevere le promozioni e accumulare punti con la tessera.</Muted>
       </View>
       {googleEnabled ? (
         <>
