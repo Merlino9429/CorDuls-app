@@ -7,6 +7,7 @@ export interface Profile {
   address: string | null;
   email: string | null;
   card_number: string;
+  welcome_sent_at?: string | null;
   role: Role;
 }
 

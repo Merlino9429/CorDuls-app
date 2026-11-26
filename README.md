@@ -25,6 +25,7 @@ La stessa app ha un'**area Admin**, visibile solo agli account amministratore, p
 - Ritiro o consegna, con scelta dell'orario ("prima possibile" o fasce da 15 minuti).
 - Pagamento con carta, Apple Pay o Google Pay (SumUp), oppure in contanti se l'admin lo abilita.
 - Stato dell'ordine aggiornato in tempo reale e notifica push a ogni cambio di stato.
+- **Email di benvenuto** al primo accesso (funzione `send-welcome`, inviata tramite Resend da info@corduls.it; richiede il segreto `RESEND_API_KEY`).
 - Registrazione e login con **email** oppure con **account Google**, e profilo con i dati salvati per i prossimi ordini.
 - **Tessera punti**: ogni cliente ha un numero di tessera (es. `CD-12345678`) con il suo **codice QR** da mostrare in cassa, e guadagna punti sugli ordini completati, in base ai punti per euro che imposti. Può avere un bonus di benvenuto e spende i punti in premi al checkout (sconto in €). Se un ordine viene annullato, i punti del premio tornano indietro e quelli guadagnati vengono stornati.
 
@@ -105,7 +106,7 @@ Sul computer servono Node.js 20 o superiore e la [Supabase CLI](https://supabase
    ```bash
    supabase login
    supabase link --project-ref <ID-PROGETTO>
-   supabase db push                 # crea tabelle, sicurezza e bucket "images" (migrazioni 0001, 0002 e 0003)
+   supabase db push                 # crea tabelle, sicurezza e bucket "images" (migrazioni da 0001 a 0005)
    # facoltativo: dati di esempio
    psql "<connection string>" -f supabase/seed.sql
    ```
@@ -143,6 +144,7 @@ Chiudi e riapri l'app: comparirà il tab **Admin**. Ripeti per ogni collaborator
    supabase functions deploy update-order-status
    supabase functions deploy send-push
    supabase functions deploy delete-account
+   supabase functions deploy send-welcome
    supabase functions deploy sumup-webhook --no-verify-jwt
    supabase functions deploy payment-return --no-verify-jwt
    ```

@@ -14,6 +14,14 @@ interface AuthState {
 
 const AuthContext = createContext<AuthState | null>(null);
 
+// Email di benvenuto: al primo accesso chiediamo al server di inviarla (una volta sola per cliente).
+const welcomeRequested = new Set<string>();
+function requestWelcomeEmail(profile: Profile | null) {
+  if (!profile || profile.welcome_sent_at || welcomeRequested.has(profile.id)) return;
+  welcomeRequested.add(profile.id);
+  supabase.functions.invoke('send-welcome', { body: {} }).catch(() => {});
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -23,6 +31,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!userId) { setProfile(null); return; }
     const { data } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle();
     setProfile((data as Profile) ?? null);
+    requestWelcomeEmail((data as Profile) ?? null);
   }, []);
 
   useEffect(() => {
