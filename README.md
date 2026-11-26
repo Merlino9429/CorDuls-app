@@ -12,7 +12,7 @@ La stessa app ha un'**area Admin**, visibile solo agli account amministratore, p
 | Logica server | Supabase Edge Functions (Deno) |
 | Pagamenti | SumUp Online Payments, con il checkout ospitato da SumUp |
 | Notifiche push | Web Push del browser (web app) · Expo Push Service per le eventuali app degli store |
-| Hosting web app | Netlify (oppure Cloudflare Pages) su `corduls.it` |
+| Hosting web app | Cloudflare Workers (static assets) su `corduls.it`, DNS su Cloudflare |
 
 ## Funzionalità
 
@@ -75,7 +75,10 @@ Ogni modifica al codice pubblicata sul branch collegato aggiorna il sito in un p
 - Sostituire le icone provvisorie in `public/icons/` con il logo Cor Duls (192×192, 512×512, maskable 512×512 con margine del 20%, apple-touch-icon 180×180).
 - Completare l'**informativa privacy** in `src/app/privacy.tsx` (dati aziendali tra parentesi quadre) e farla verificare.
 
-### Hosting senza badge: Cloudflare Pages (alternativa gratuita)
+### Hosting attuale: Cloudflare
+Dal 26/11/2026 la web app è servita da **Cloudflare** (Worker `corduls-app`, configurato in `wrangler.jsonc`), che si aggiorna da solo a ogni push su `main`. Anche i **DNS di corduls.it sono gestiti su Cloudflare** (i nameserver su Register.it puntano a `donald.ns.cloudflare.com` e `fish.ns.cloudflare.com`): i record di posta, PEC e DKIM sono stati copiati identici da Register.it. `www.corduls.it` reindirizza a `corduls.it` con una regola di redirect di Cloudflare.
+
+### (Storico) Hosting senza badge: Cloudflare Pages
 Sul piano gratuito Netlify aggiunge in basso a destra il badge obbligatorio "Powered by Netlify". L'app gli lascia spazio in automatico (`src/lib/webOverlay.ts`), ma per toglierlo del tutto si può usare **Cloudflare Pages**, gratuito e senza badge:
 1. dash.cloudflare.com → **Workers & Pages → Create → Pages → Connect to Git** e scegli `corduls-app`;
 2. Framework preset: *None*; Build command: `npx expo export --platform web`; Build output directory: `dist`; variabile d'ambiente `NODE_VERSION` = `22`;
