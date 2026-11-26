@@ -3,6 +3,8 @@
 {
   "name": "corduls-app",
   "compatibility_date": "2026-11-01",
+  // eseguito da `wrangler deploy` dopo la build di Expo: toglie la "@" dai percorsi dei file
+  "build": { "command": "node scripts/fix-asset-paths.mjs" },
   "assets": {
     "directory": "./dist",
     // tutte le pagine dell'app (es. /tessera, /order/123) sono servite da index.html
